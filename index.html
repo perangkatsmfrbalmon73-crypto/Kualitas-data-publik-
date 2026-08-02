@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dashboard analisis ilmiah kualitas data publik dunia dan strategi peningkatan kualitas data publik Indonesia." />
+  <meta name="author" content="IRWAN AZIS REKENG" />
+  <meta name="copyright" content="© 2026 IRWAN AZIS REKENG – KONTRIBUSI DIGITAL" />
+  <meta name="theme-color" content="#d71920" />
+  <title>MERDEKA DATA | Global Public Data Quality Intelligence</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root{
+      --red:#e31b23;
+      --red2:#ff4550;
+      --white:#ffffff;
+      --ink:#07111f;
+      --muted:#8ca0b7;
+      --panel:rgba(9,20,37,.78);
+      --panel2:rgba(14,31,55,.78);
+      --line:rgba(255,255,255,.11);
+      --cyan:#4fe8ff;
+      --gold:#ffd166;
+      --green:#4ade80;
+      --danger:#ff6b6b;
+      --shadow:0 24px 80px rgba(0,0,0,.38);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--white);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(227,27,35,.24), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(79,232,255,.14), transparent 24%),
+        linear-gradient(135deg,#03070d 0%,#07111f 46%,#0a1627 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; z-index:-1;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:42px 42px;
+      mask-image:linear-gradient(to bottom,black,transparent 92%);
+    }
+    .orb{position:fixed;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:-1;opacity:.45}
+    .orb.a{width:280px;height:280px;background:radial-gradient(circle,#e31b23,transparent 68%);top:6%;left:-100px;animation:float 9s ease-in-out infinite}
+    .orb.b{width:330px;height:330px;background:radial-gradient(circle,#4fe8ff,transparent 70%);right:-150px;top:35%;animation:float 12s ease-in-out infinite reverse}
+    @keyframes float{50%{transform:translateY(30px) translateX(18px) scale(1.08)}}
+    @keyframes pulse{50%{box-shadow:0 0 0 14px rgba(74,222,128,0)}}
+    @keyframes scan{0%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+    @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+    .wrap{width:min(1440px,calc(100% - 28px));margin:auto}
+    header{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(18px);
+      background:rgba(3,7,13,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 0}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .logo{
+      width:52px;height:52px;border-radius:17px;
+      display:grid;place-items:center;
+      font:800 18px Orbitron;
+      background:linear-gradient(145deg,#fff 0 45%,#e31b23 46%);
+      color:#07111f;border:1px solid rgba(255,255,255,.35);
+      box-shadow:0 12px 30px rgba(227,27,35,.26);
+      position:relative;overflow:hidden;
+    }
+    .logo:after{content:"";position:absolute;inset:-50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:scan 4s linear infinite}
+    .brand h1{font:800 clamp(15px,2vw,21px) Orbitron;margin:0;letter-spacing:.04em}
+    .brand small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+    nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    nav a,.btn{
+      color:#fff;text-decoration:none;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);padding:10px 13px;border-radius:14px;
+      font-weight:700;font-size:12px;transition:.25s;cursor:pointer;
+    }
+    nav a:hover,.btn:hover{transform:translateY(-2px);border-color:rgba(79,232,255,.55);background:rgba(79,232,255,.09)}
+    .hero{padding:58px 0 26px;display:grid;grid-template-columns:1.2fr .8fr;gap:26px;align-items:stretch}
+    .hero-copy,.hero-orbit,.card{
+      border:1px solid var(--line);background:linear-gradient(145deg,var(--panel),rgba(6,14,26,.64));
+      box-shadow:var(--shadow);border-radius:var(--radius);backdrop-filter:blur(18px);
+      position:relative;overflow:hidden;
+    }
+    .hero-copy{padding:clamp(26px,5vw,58px);animation:rise .8s ease both}
+    .hero-copy:before{content:"";position:absolute;left:0;top:0;width:7px;height:100%;background:linear-gradient(var(--red),#fff,var(--red))}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border-radius:999px;background:rgba(227,27,35,.14);border:1px solid rgba(227,27,35,.35);font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(74,222,128,.55);animation:pulse 2s infinite}
+    .hero h2{font:800 clamp(34px,6vw,72px)/.98 Orbitron;margin:22px 0 18px;letter-spacing:-.035em}
+    .hero h2 span{background:linear-gradient(90deg,#fff 0 45%,#ff4b55 55% 100%);-webkit-background-clip:text;color:transparent}
+    .hero p{color:#b9c7d8;font-size:clamp(14px,1.5vw,18px);line-height:1.75;max-width:780px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+    .primary{background:linear-gradient(135deg,var(--red),#ff4550);border-color:transparent;box-shadow:0 12px 30px rgba(227,27,35,.25)}
+    .hero-orbit{min-height:390px;display:grid;place-items:center}
+    .globe{
+      width:min(260px,65vw);aspect-ratio:1;border-radius:50%;position:relative;
+      background:
+        radial-gradient(circle at 38% 32%,rgba(255,255,255,.9) 0 2%,transparent 3%),
+        radial-gradient(circle at 43% 45%,rgba(79,232,255,.8),#082749 35%,#02070d 68%);
+      box-shadow:inset -40px -35px 70px rgba(0,0,0,.75),0 0 70px rgba(79,232,255,.22);
+      animation:float 7s ease-in-out infinite;
+    }
+    .globe:before,.globe:after{content:"";position:absolute;border:1px solid rgba(79,232,255,.28);border-radius:50%;inset:10% -22%;transform:rotate(22deg)}
+    .globe:after{inset:-12% 22%;transform:rotate(70deg);border-color:rgba(227,27,35,.38)}
+    .sat{position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 20px var(--cyan);top:14%;right:16%;animation:float 4s ease-in-out infinite}
+    .float-chip{position:absolute;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:rgba(2,8,16,.82);backdrop-filter:blur(14px);font-weight:800;font-size:12px}
+    .chip1{top:10%;left:7%}.chip2{right:6%;bottom:12%}.chip3{left:9%;bottom:14%}
+    section{padding:16px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:20px 0 16px}
+    .section-head h3{font:800 clamp(23px,3vw,34px) Orbitron;margin:0}
+    .section-head p{margin:7px 0 0;color:var(--muted);font-size:13px}
+    .status{font-size:12px;color:var(--green);font-weight:800}
+    .grid{display:grid;gap:16px}
+    .kpis{grid-template-columns:repeat(4,1fr)}
+    .card{padding:20px;transition:.25s}
+    .card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22)}
+    .kpi b{font:800 clamp(29px,4vw,48px) Orbitron;display:block;margin:11px 0 6px}
+    .kpi span{color:var(--muted);font-size:12px}
+    .kpi .trend{display:inline-block;margin-top:12px;padding:7px 9px;border-radius:999px;background:rgba(74,222,128,.1);color:var(--green);font-size:10px;font-weight:800}
+    .charts{grid-template-columns:1.2fr .8fr}
+    .canvas-wrap{height:350px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    select,input{
+      background:#071523;color:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;outline:none;min-width:150px
+    }
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:13px 10px;border-bottom:1px solid var(--line);text-align:left}
+    th{color:#9fb2c7;font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+    tr:hover td{background:rgba(255,255,255,.025)}
+    .rank{font-family:Orbitron;font-weight:800}
+    .bar{height:8px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:6px}
+    .bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--red),#fff,var(--cyan))}
+    .badge{padding:6px 8px;border-radius:999px;font-size:10px;font-weight:800;background:rgba(79,232,255,.1);color:var(--cyan)}
+    .indonesia{outline:1px solid rgba(227,27,35,.7);background:rgba(227,27,35,.06)}
+    .method{grid-template-columns:repeat(3,1fr)}
+    .icon{width:45px;height:45px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(227,27,35,.22),rgba(79,232,255,.12));font-size:22px}
+    .method h4,.solution h4{margin:15px 0 8px}
+    .method p,.solution p,.note{color:var(--muted);font-size:12px;line-height:1.65}
+    .solutions{grid-template-columns:repeat(2,1fr)}
+    .solution{display:grid;grid-template-columns:auto 1fr;gap:15px}
+    .score-ring{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--red) calc(var(--v)*1%),rgba(255,255,255,.08) 0);position:relative;font:800 16px Orbitron}
+    .score-ring:after{content:"";position:absolute;inset:7px;background:#081421;border-radius:50%}
+    .score-ring span{z-index:1}
+    .roadmap{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .phase{min-height:190px}
+    .phase strong{font:800 20px Orbitron;color:var(--red2)}
+    .phase ul{padding-left:18px;color:#aebdd0;font-size:12px;line-height:1.7}
+    .lab{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}
+    .sliders label{display:grid;grid-template-columns:1fr 60px;gap:10px;margin:13px 0;color:#c5d1de;font-size:12px}
+    input[type=range]{padding:0;min-width:0;width:100%;accent-color:var(--red)}
+    .result{display:grid;place-items:center;min-height:280px;text-align:center}
+    .result-number{font:900 clamp(60px,10vw,110px) Orbitron;background:linear-gradient(180deg,#fff,var(--cyan));-webkit-background-clip:text;color:transparent}
+    .source-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .source-list a{color:white;text-decoration:none}
+    footer{margin-top:30px;border-top:1px solid var(--line);padding:28px 0 45px;color:#8194aa;font-size:11px}
+    .copyright{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    .warning{border-left:4px solid var(--gold);padding:13px 15px;background:rgba(255,209,102,.08);color:#d7c89e;border-radius:12px;font-size:11px;line-height:1.6}
+    .skeleton{animation:pulseFade 1.2s ease-in-out infinite}
+    @keyframes pulseFade{50%{opacity:.45}}
+    @media(max-width:1100px){
+      .hero,.charts,.lab{grid-template-columns:1fr}
+      .kpis{grid-template-columns:repeat(2,1fr)}
+      .method{grid-template-columns:1fr 1fr}
+      .roadmap{grid-template-columns:repeat(2,1fr)}
+      .source-list{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:680px){
+      .wrap{width:min(100% - 18px,1440px)}
+      .nav{align-items:flex-start}.brand small{display:none}nav{display:none}
+      .hero{padding-top:24px}.hero-copy{padding:25px 22px}.hero-orbit{min-height:330px}
+      .kpis,.method,.solutions,.source-list,.roadmap{grid-template-columns:1fr}
+      .section-head{align-items:flex-start;flex-direction:column}
+      .canvas-wrap{height:290px}
+      .card{padding:16px}
+      .table-scroll{overflow-x:auto}
+      table{min-width:640px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="orb a"></div><div class="orb b"></div>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo" aria-label="Logo pribadi iAR">iAR</div>
+        <div><h1>MERDEKA DATA</h1><small>GLOBAL PUBLIC DATA QUALITY INTELLIGENCE</small></div>
+      </div>
+      <nav>
+        <a href="#benchmark">Benchmark</a><a href="#metode">Metode</a><a href="#solusi">Solusi Indonesia</a><a href="#simulator">Simulator</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <article class="hero-copy">
+        <div class="eyebrow"><span class="dot"></span> Sistem analisis aktif · 2026</div>
+        <h2>DATA PUBLIK <span>BERDAULAT.</span></h2>
+        <p>Dashboard ilmiah untuk membandingkan kualitas, keterbukaan, kelengkapan, keterkinian, interoperabilitas, dan kemudahan penggunaan data publik antarnegara—serta merancang lompatan strategis Indonesia menuju ekosistem data publik kelas dunia.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#benchmark">Jelajahi Perbandingan</a>
+          <button class="btn" id="refreshBtn">↻ Sinkronkan API</button>
+          <button class="btn" id="exportBtn">⇩ Ekspor Ringkasan</button>
+        </div>
+      </article>
+      <aside class="hero-orbit" aria-label="Visualisasi dunia digital">
+        <div class="globe"><div class="sat"></div></div>
+        <div class="float-chip chip1">197 Negara · ODIN</div>
+        <div class="float-chip chip2">API Tanpa Kunci</div>
+        <div class="float-chip chip3">Audit Metodologi</div>
+      </aside>
+    </section>
+
+    <section id="benchmark">
+      <div class="section-head">
+        <div><h3>Radar Kualitas Data Dunia</h3><p>Snapshot ODIN 2024/25 + indikator kontekstual World Bank yang dimuat langsung.</p></div>
+        <div class="status" id="apiStatus">● Menyiapkan koneksi API</div>
+      </div>
+
+      <div class="grid kpis">
+        <article class="card kpi"><span>Cakupan ODIN</span><b>197</b><small>negara & wilayah</small><div class="trend">EDISI 2024/25</div></article>
+        <article class="card kpi"><span>Pemimpin global</span><b>90</b><small>skor Malaysia & Singapura</small><div class="trend">SKOR RESMI ODIN</div></article>
+        <article class="card kpi"><span>Internet Indonesia</span><b id="internetKpi" class="skeleton">--</b><small id="internetYear">memuat API…</small><div class="trend">WORLD BANK LIVE</div></article>
+        <article class="card kpi"><span>Efektivitas pemerintah IDN</span><b id="govKpi" class="skeleton">--</b><small id="govYear">memuat API…</small><div class="trend">WGI · PERSENTIL</div></article>
+      </div>
+
+      <div class="grid charts" style="margin-top:16px">
+        <article class="card">
+          <div class="section-head" style="margin:0 0 12px">
+            <div><h3 style="font-size:20px">Benchmark Negara Terpilih</h3><p>Skor utama merupakan snapshot ODIN, bukan hasil simulasi dashboard.</p></div>
+          </div>
+          <div class="canvas-wrap"><canvas id="rankChart"></canvas></div>
+        </article>
+        <article class="card">
+          <div class="section-head" style="margin:0 0 12px">
+            <div><h3 style="font-size:20px">Profil Indonesia</h3><p>Kerangka diagnosis enam dimensi.</p></div>
+          </div>
+          <div class="canvas-wrap"><canvas id="radarChart"></canvas></div>
+        </article>
+      </div>
+
+      <article class="card" style="margin-top:16px">
+        <div class="toolbar">
+          <input id="searchCountry" placeholder="Cari negara…" aria-label="Cari negara">
+          <select id="regionFilter" aria-label="Filter kawasan">
+            <option value="all">Semua kawasan</option><option>Asia</option><option>Eropa</option><option>Amerika</option><option>Oseania</option><option>Afrika</option>
+          </select>
+          <select id="sortFilter" aria-label="Urutkan">
+            <option value="score">Skor tertinggi</option><option value="name">Nama A–Z</option>
+          </select>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Peringkat sampel</th><th>Negara</th><th>Kawasan</th><th>Skor ODIN</th><th>Status</th></tr></thead>
+            <tbody id="countryTable"></tbody>
+          </table>
+        </div>
+        <p class="note">Tabel ini menampilkan negara terpilih untuk demonstrasi antarmuka. Gunakan tautan Bulk Download ODIN pada bagian sumber untuk memperoleh seluruh 197 negara.</p>
+      </article>
+    </section>
+
+    <section id="metode">
+      <div class="section-head"><div><h3>Metodologi yang Dapat Diaudit</h3><p>Memisahkan fakta resmi, inferensi analitis, dan simulasi kebijakan.</p></div></div>
+      <div class="grid method">
+        <article class="card"><div class="icon">◉</div><h4>Fakta Terverifikasi</h4><p>Skor ODIN digunakan sebagai acuan keterbukaan dan cakupan statistik resmi. Nilai API World Bank ditampilkan bersama tahun observasinya.</p></article>
+        <article class="card"><div class="icon">⌁</div><h4>Analisis Diagnostik</h4><p>Radar Indonesia adalah pembacaan struktural enam dimensi untuk membantu prioritisasi. Ia bukan skor resmi lembaga internasional.</p></article>
+        <article class="card"><div class="icon">△</div><h4>Simulasi Kebijakan</h4><p>Simulator menghitung skor skenario berbobot sama. Hasilnya merupakan proyeksi konseptual, bukan ramalan kausal.</p></article>
+      </div>
+      <div class="warning" style="margin-top:14px"><b>Batas interpretasi:</b> kualitas data publik tidak dapat direduksi menjadi satu angka. Skor tinggi tidak otomatis menjamin akurasi setiap dataset, perlindungan privasi, independensi statistik, atau dampak sosial yang positif.</div>
+    </section>
+
+    <section id="solusi">
+      <div class="section-head"><div><h3>Solusi Peningkatan Indonesia</h3><p>Arsitektur reformasi dari produksi data sampai pemanfaatan publik.</p></div></div>
+      <div class="grid solutions">
+        <article class="card solution"><div class="score-ring" style="--v:95"><span>95</span></div><div><h4>Standar Metadata Nasional Otomatis</h4><p>Wajibkan metadata mesin-terbaca, definisi variabel, unit, cakupan, periode, metodologi, lisensi, dan riwayat revisi pada setiap dataset.</p></div></article>
+        <article class="card solution"><div class="score-ring" style="--v:93"><span>93</span></div><div><h4>API-First Government</h4><p>Setiap data non-rahasia diterbitkan melalui API stabil, dokumentasi OpenAPI, batas layanan yang jelas, versi data, dan mekanisme deprecation.</p></div></article>
+        <article class="card solution"><div class="score-ring" style="--v:91"><span>91</span></div><div><h4>Data Quality Observatory</h4><p>Bangun pengawas independen yang mengaudit kelengkapan, konsistensi, keterkinian, duplikasi, bias, aksesibilitas, dan kepatuhan lisensi.</p></div></article>
+        <article class="card solution"><div class="score-ring" style="--v:89"><span>89</span></div><div><h4>Single Statistical Data Spine</h4><p>Hubungkan data pusat-daerah melalui kode referensi, identitas wilayah, katalog variabel, master data, dan registri statistik yang seragam.</p></div></article>
+        <article class="card solution"><div class="score-ring" style="--v:87"><span>87</span></div><div><h4>Reproducible Public Statistics</h4><p>Publikasikan skrip pengolahan, checksum, versi, catatan perubahan, serta dataset mentah dan teragregasi sejauh aman dan legal.</p></div></article>
+        <article class="card solution"><div class="score-ring" style="--v:85"><span>85</span></div><div><h4>Insentif Berbasis Pemakaian</h4><p>Ukur keberhasilan bukan hanya jumlah dataset, tetapi pemakaian API, waktu respons, sitasi, kualitas umpan balik, dan dampak layanan.</p></div></article>
+      </div>
+
+      <div class="section-head"><div><h3 style="font-size:24px">Peta Jalan 2026–2030</h3></div></div>
+      <div class="roadmap">
+        <article class="card phase"><strong>01</strong><h4>Audit</h4><ul><li>Inventaris dataset</li><li>Peta duplikasi</li><li>Baseline kualitas</li></ul></article>
+        <article class="card phase"><strong>02</strong><h4>Standarisasi</h4><ul><li>Metadata wajib</li><li>Kode referensi tunggal</li><li>Lisensi baku</li></ul></article>
+        <article class="card phase"><strong>03</strong><h4>Integrasi</h4><ul><li>API gateway</li><li>Registri nasional</li><li>Sinkronisasi pusat-daerah</li></ul></article>
+        <article class="card phase"><strong>04</strong><h4>Validasi</h4><ul><li>Uji otomatis</li><li>Audit independen</li><li>Pelaporan insiden</li></ul></article>
+        <article class="card phase"><strong>05</strong><h4>Dampak</h4><ul><li>Ekosistem inovasi</li><li>Data untuk kebijakan</li><li>Partisipasi publik</li></ul></article>
+      </div>
+    </section>
+
+    <section id="simulator">
+      <div class="section-head"><div><h3>Laboratorium Skenario Indonesia</h3><p>Geser setiap dimensi untuk menguji prioritas reformasi.</p></div></div>
+      <div class="lab">
+        <article class="card sliders" id="sliders"></article>
+        <article class="card result">
+          <div><div class="eyebrow">INDEKS SIMULASI · NON-RESMI</div><div class="result-number" id="simScore">63</div><p id="simLabel">Tahap penguatan fondasi</p><div class="bar" style="width:min(420px,80vw)"><i id="simBar" style="width:63%"></i></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h3>Sumber Data & API Gratis</h3><p>Semua sumber dapat dibuka dan diverifikasi langsung.</p></div></div>
+      <div class="source-list">
+        <a class="card" href="https://odin.opendatawatch.com/" target="_blank" rel="noopener"><b>ODIN 2024/25</b><p class="note">Indeks cakupan dan keterbukaan statistik resmi.</p></a>
+        <a class="card" href="https://odin.opendatawatch.com/data" target="_blank" rel="noopener"><b>ODIN Bulk Download</b><p class="note">Unduh data lengkap seluruh negara.</p></a>
+        <a class="card" href="https://api.worldbank.org/v2/" target="_blank" rel="noopener"><b>World Bank API v2</b><p class="note">API indikator global tanpa kunci.</p></a>
+        <a class="card" href="https://data360.worldbank.org/en/api" target="_blank" rel="noopener"><b>World Bank Data360</b><p class="note">Metadata dan dataset lintas tema.</p></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap copyright">
+      <div><b>© 2026 iAR · IRWAN AZIS REKENG · KONTRIBUSI DIGITAL</b><br>Dilarang menghapus identitas pencipta, menjual ulang, atau mengklaim karya tanpa izin tertulis.</div>
+      <div>Dashboard edukasi & analisis kebijakan · Bukan situs resmi pemerintah atau lembaga pemeringkat.</div>
+    </div>
+  </footer>
+
+<script>
+"use strict";
+
+const countries = [
+  {name:"Malaysia", region:"Asia", score:90, status:"Pemimpin"},
+  {name:"Singapura", region:"Asia", score:90, status:"Pemimpin"},
+  {name:"Polandia", region:"Eropa", score:82, status:"Sangat kuat"},
+  {name:"Australia", region:"Oseania", score:77, status:"Sangat kuat"},
+  {name:"Kazakhstan", region:"Asia", score:72, status:"Kuat"},
+  {name:"Taiwan", region:"Asia", score:66, status:"Berkembang"},
+  {name:"Indonesia", region:"Asia", score:63, status:"Perlu akselerasi", indonesia:true},
+  {name:"Bangladesh", region:"Asia", score:46, status:"Perlu penguatan"},
+  {name:"Ghana", region:"Afrika", score:55, status:"Berkembang"},
+  {name:"Argentina", region:"Amerika", score:61, status:"Berkembang"}
+];
+
+const dims = [
+  ["Kelengkapan",61],["Keterbukaan",66],["Keterkinian",54],
+  ["Interoperabilitas",58],["Dokumentasi",60],["Pemanfaatan",67]
+];
+
+const tableBody = document.getElementById("countryTable");
+const search = document.getElementById("searchCountry");
+const regionFilter = document.getElementById("regionFilter");
+const sortFilter = document.getElementById("sortFilter");
+
+function renderTable(){
+  const q = search.value.toLowerCase();
+  let rows = countries.filter(c => c.name.toLowerCase().includes(q) && (regionFilter.value==="all" || c.region===regionFilter.value));
+  rows.sort((a,b)=> sortFilter.value==="name" ? a.name.localeCompare(b.name) : b.score-a.score);
+  tableBody.innerHTML = rows.map((c,i)=>`
+    <tr class="${c.indonesia?"indonesia":""}">
+      <td class="rank">#${i+1}</td>
+      <td><b>${c.name}</b>${c.indonesia?' <span class="badge">FOKUS</span>':''}</td>
+      <td>${c.region}</td>
+      <td><b>${c.score}</b><div class="bar"><i style="width:${c.score}%"></i></div></td>
+      <td>${c.status}</td>
+    </tr>`).join("");
+}
+[search,regionFilter,sortFilter].forEach(el=>el.addEventListener("input",renderTable));
+renderTable();
+
+Chart.defaults.color="#b9c7d8";
+Chart.defaults.borderColor="rgba(255,255,255,.09)";
+new Chart(document.getElementById("rankChart"),{
+  type:"bar",
+  data:{
+    labels:countries.slice(0,8).map(x=>x.name),
+    datasets:[{label:"Skor ODIN",data:countries.slice(0,8).map(x=>x.score),
+      backgroundColor:countries.slice(0,8).map(x=>x.indonesia?"rgba(227,27,35,.9)":"rgba(79,232,255,.55)"),
+      borderRadius:10,borderSkipped:false}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:()=> "Snapshot referensi"}}},
+    scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+"/100"}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById("radarChart"),{
+  type:"radar",
+  data:{labels:dims.map(x=>x[0]),datasets:[{label:"Indonesia – diagnosis dashboard",data:dims.map(x=>x[1]),
+    backgroundColor:"rgba(227,27,35,.18)",borderColor:"#ff4550",pointBackgroundColor:"#fff",pointBorderColor:"#ff4550",borderWidth:2}]},
+  options:{responsive:true,maintainAspectRatio:false,scales:{r:{beginAtZero:true,max:100,ticks:{display:false},grid:{color:"rgba(255,255,255,.12)"},angleLines:{color:"rgba(255,255,255,.12)"},pointLabels:{font:{size:11}}}}}
+});
+
+const sliderBox=document.getElementById("sliders");
+dims.forEach(([name,val],i)=>{
+  sliderBox.insertAdjacentHTML("beforeend",`<label><span>${name}</span><b id="v${i}">${val}</b>
+  <input aria-label="${name}" type="range" min="0" max="100" value="${val}" data-i="${i}"></label>`);
+});
+function updateSim(){
+  const vals=[...sliderBox.querySelectorAll('input')].map((r,i)=>{document.getElementById("v"+i).textContent=r.value;return +r.value});
+  const score=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+  document.getElementById("simScore").textContent=score;
+  document.getElementById("simBar").style.width=score+"%";
+  document.getElementById("simLabel").textContent=score>=85?"Kelas dunia – pertahankan audit":score>=70?"Akselerasi matang":score>=55?"Tahap penguatan fondasi":"Risiko fragmentasi tinggi";
+}
+sliderBox.addEventListener("input",updateSim); updateSim();
+
+async function latestIndicator(indicator){
+  const url=`https://api.worldbank.org/v2/country/IDN/indicator/${indicator}?format=json&per_page=20`;
+  const res=await fetch(url,{cache:"no-store"});
+  if(!res.ok) throw new Error("API gagal");
+  const json=await res.json();
+  const row=json?.[1]?.find(x=>x.value!==null);
+  return row ? {value:row.value,year:row.date} : null;
+}
+async function loadAPI(){
+  const status=document.getElementById("apiStatus");
+  status.textContent="● Menghubungkan World Bank API…";
+  try{
+    const [internet,gov]=await Promise.all([
+      latestIndicator("IT.NET.USER.ZS"),
+      latestIndicator("GE.PER.RNK")
+    ]);
+    if(internet){
+      const el=document.getElementById("internetKpi");el.textContent=Number(internet.value).toFixed(1)+"%";el.classList.remove("skeleton");
+      document.getElementById("internetYear").textContent="pengguna internet · "+internet.year;
+    }
+    if(gov){
+      const el=document.getElementById("govKpi");el.textContent=Number(gov.value).toFixed(1);el.classList.remove("skeleton");
+      document.getElementById("govYear").textContent="persentil · "+gov.year;
+    }
+    status.textContent="● API tersinkron";
+    status.style.color="#4ade80";
+  }catch(e){
+    status.textContent="● Mode fallback · API tidak terjangkau";
+    status.style.color="#ffd166";
+    document.getElementById("internetKpi").textContent="N/A";
+    document.getElementById("govKpi").textContent="N/A";
+    document.querySelectorAll(".skeleton").forEach(x=>x.classList.remove("skeleton"));
+  }
+}
+document.getElementById("refreshBtn").addEventListener("click",loadAPI);
+loadAPI();
+
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const text=`MERDEKA DATA – Ringkasan Analisis
+© 2026 IRWAN AZIS REKENG – KONTRIBUSI DIGITAL
+
+Acuan utama: Open Data Inventory (ODIN) 2024/25.
+Fokus solusi Indonesia:
+1. Standar metadata nasional otomatis.
+2. API-first government.
+3. Data Quality Observatory independen.
+4. Integrasi master data pusat-daerah.
+5. Statistik publik yang dapat direproduksi.
+6. Insentif berbasis pemanfaatan dan dampak.
+
+Catatan: skor simulator merupakan analisis non-resmi.`;
+  const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ringkasan-merdeka-data.txt";a.click();URL.revokeObjectURL(a.href);
+});
+
+// Proteksi ringan antarmuka; bukan DRM absolut.
+document.addEventListener("contextmenu",e=>e.preventDefault());
+console.info("%c© 2026 IRWAN AZIS REKENG – KONTRIBUSI DIGITAL","color:#ff4550;font-size:16px;font-weight:bold");
+</script>
+</body>
+</html>
