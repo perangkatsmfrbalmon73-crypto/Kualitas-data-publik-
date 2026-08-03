@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Dashboard analisis ilmiah ekosistem data publik resmi Indonesia.">
+<meta name="author" content="IRWAN AZIS REKENG">
+<meta name="copyright" content="© 2026 IRWAN AZIS REKENG – KONTRIBUSI DIGITAL">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<title>Indonesia Public Data Scientific Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06111e;--panel:#0d1c2e;--panel2:#10263e;--text:#f2f7fb;--muted:#9fb2c5;--line:rgba(255,255,255,.11);--red:#f43b53;--cyan:#38d5ff;--green:#36d889;--yellow:#f6c85f;--violet:#b78aff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 8% 0,rgba(244,59,83,.18),transparent 28%),radial-gradient(circle at 96% 2%,rgba(56,213,255,.13),transparent 29%),linear-gradient(135deg,#040a12,#081829 55%,#06111e);color:var(--text);font-family:Inter,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.1;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:34px 34px}
+a{color:inherit}.shell{max-width:1500px;margin:auto;padding:16px}
+header{position:sticky;top:8px;z-index:50;display:flex;align-items:center;gap:14px;background:rgba(5,15,27,.84);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;padding:13px 16px}
+.logo{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font:800 18px "Space Grotesk";color:#07111f;background:linear-gradient(145deg,#fff 0 48%,#ed1b35 49%);border:2px solid #fff}
+.brand{min-width:0}.brand h1{margin:0;font:700 clamp(15px,2vw,20px) "Space Grotesk";white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand p{margin:3px 0 0;color:var(--muted);font-size:11px}
+nav{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}.btn,button,select,input{border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--text);border-radius:11px;padding:10px 12px;font-weight:700}.btn{text-decoration:none;font-size:12px}button{cursor:pointer}.btn:hover,button:hover{background:rgba(255,255,255,.1)}
+.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;padding:28px 0 16px}.panel{background:linear-gradient(145deg,rgba(16,38,62,.89),rgba(7,20,35,.86));border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 20px 55px rgba(0,0,0,.28)}
+.hero h2{font:800 clamp(34px,5vw,66px)/1 "Space Grotesk";letter-spacing:-2px;margin:14px 0}.hero h2 span{background:linear-gradient(90deg,#fff,#70e5ff);-webkit-background-clip:text;color:transparent}.hero p{color:var(--muted);line-height:1.7;max-width:900px}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:#ffdfe5;font-weight:800;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.pulse{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 7px rgba(54,216,137,.12)}
+.clock{font:800 clamp(32px,5vw,52px) "Space Grotesk";margin:12px 0}.muted{color:var(--muted)}.statusline{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:#ff7081}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:14px 0}.metric{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:18px;padding:17px}.metric small{color:var(--muted);text-transform:uppercase;letter-spacing:.8px}.metric strong{display:block;font:800 clamp(25px,3vw,38px) "Space Grotesk";margin:8px 0}.metric span{font-size:12px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:15px;margin-top:15px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel h3{margin:0;font:700 18px "Space Grotesk"}.chip,.badge{display:inline-flex;padding:6px 9px;border-radius:999px;font-size:10px;font-weight:800}.chip{background:rgba(56,213,255,.1);color:#80e9ff}.live{background:rgba(54,216,137,.12);color:#71efae}.key{background:rgba(246,200,95,.12);color:#ffe08d}.download{background:rgba(56,213,255,.12);color:#86ebff}.map{background:rgba(183,138,255,.13);color:#d7baff}.doc{background:rgba(255,255,255,.09);color:#dce8f3}
+.radar{width:100%;max-width:510px;margin:auto}.radar svg{width:100%;height:auto}.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}.legend div{font-size:12px;color:var(--muted)}
+.dimension{display:grid;grid-template-columns:160px 1fr 48px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.track{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}.track span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:inherit}
+.notice{padding:14px 16px;border-left:4px solid var(--yellow);background:rgba(246,200,95,.08);border-radius:10px;color:#f8e8b5;font-size:12px;line-height:1.6;margin-top:14px}
+.findings{display:grid;gap:10px}.finding{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:13px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.035)}.finding b{font-size:13px}.finding p{margin:5px 0 0;font-size:12px;color:var(--muted);line-height:1.55}.n{width:32px;height:32px;border-radius:10px;background:rgba(56,213,255,.11);display:grid;place-items:center;font-weight:800;color:#82eaff}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}.controls input{flex:1;min-width:240px}.controls select{min-width:160px}.tablewrap{overflow:auto;max-height:560px}table{width:100%;border-collapse:collapse}th,td{padding:12px 9px;text-align:left;border-bottom:1px solid var(--line);font-size:12px;vertical-align:top}th{color:var(--muted);font-size:10px;text-transform:uppercase;position:sticky;top:0;background:#0d1c2e}.score{font:800 17px "Space Grotesk"}.source-link{color:#7fe8ff;text-decoration:none;font-weight:800}
+.matrix{display:grid;gap:9px}.mrow{display:grid;grid-template-columns:185px repeat(6,1fr) 48px;gap:6px;align-items:center}.mhead{color:var(--muted);font-size:9px;text-transform:uppercase}.cell{height:28px;border-radius:7px;display:grid;place-items:center;font-size:9px;font-weight:800;background:rgba(255,255,255,.06)}.c1{background:rgba(244,59,83,.18)}.c2{background:rgba(246,200,95,.18)}.c3{background:rgba(56,213,255,.18)}.c4{background:rgba(54,216,137,.18)}
+.recommend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.rec{border:1px solid var(--line);border-radius:16px;padding:15px;background:rgba(255,255,255,.035)}.rec h4{margin:8px 0}.rec p{font-size:12px;line-height:1.55;color:var(--muted)}.rec ul{padding-left:17px;color:var(--muted);font-size:12px;line-height:1.6}
+footer{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:11px;padding:25px 3px}.watermark{position:fixed;right:14px;bottom:10px;pointer-events:none;opacity:.35;font-size:9px;border:1px solid var(--line);padding:6px 8px;border-radius:7px;background:rgba(0,0,0,.3)}
+@media(max-width:980px){.hero,.layout{grid-template-columns:1fr}.grid4{grid-template-columns:repeat(2,1fr)}.recommend{grid-template-columns:1fr}.mrow{grid-template-columns:140px repeat(6,1fr) 40px}nav{display:none}}
+@media(max-width:560px){.shell{padding:9px}.panel{padding:15px}.grid4{grid-template-columns:1fr}.dimension{grid-template-columns:1fr}.legend{grid-template-columns:1fr}.mrow{grid-template-columns:105px repeat(6,34px) 34px;font-size:9px}.matrix{overflow:auto}.watermark{display:none}}
+@media print{body{background:#fff;color:#111}.panel,.metric{background:#fff;color:#111;box-shadow:none;border:1px solid #ccc}.muted,.hero p,.finding p,.rec p,.rec ul{color:#444!important}header,.controls,.watermark{display:none}}
+</style>
+</head>
+<body>
+<div class="watermark">© 2026 iAR · IRWAN AZIS REKENG</div>
+<div class="shell">
+<header>
+<div class="logo">iAR</div><div class="brand"><h1>Indonesia Public Data Scientific Intelligence</h1><p>Analisis kualitas, keterbukaan, interoperabilitas, dan akses data resmi</p></div>
+<nav><a class="btn" href="#indeks">Indeks</a><a class="btn" href="#temuan">Temuan</a><a class="btn" href="#matriks">Matriks</a><a class="btn" href="#sumber">Sumber</a><a class="btn" href="#rekomendasi">Rekomendasi</a><button id="printBtn">Cetak PDF</button></nav>
+</header>
+
+<section class="hero">
+<article class="panel">
+<div class="eyebrow"><span class="pulse"></span> audit analitis ekosistem data publik</div>
+<h2>Menilai bukan sekadar jumlah data, tetapi <span>mutu dan kegunaannya.</span></h2>
+<p>Dashboard ini menganalisis portal data resmi Indonesia berdasarkan enam dimensi ilmiah: keterbukaan, kemutakhiran, kelengkapan metadata, interoperabilitas, keterbacaan mesin, serta lisensi dan atribusi. Nilai merupakan indeks analitis transparan dari karakteristik akses yang terlihat pada portal resmi—bukan penilaian resmi pemerintah.</p>
+</article>
+<aside class="panel">
+<div class="eyebrow">Waktu audit perangkat</div><div class="clock" id="clock">--:--:--</div><div class="muted" id="date">—</div>
+<div class="statusline"><span>Status internet</span><b id="net" class="warn">Memeriksa</b></div>
+<div class="statusline"><span>Sumber dianalisis</span><b id="sourceCount">0</b></div>
+<div class="statusline"><span>Sektor tercakup</span><b id="sectorCount">0</b></div>
+<div class="statusline"><span>Data simulasi</span><b class="ok">Tidak digunakan</b></div>
+</aside>
+</section>
+
+<section class="grid4" id="indeks">
+<article class="metric"><small>Indeks akses nasional</small><strong id="nationalIndex">0</strong><span>Rata-rata audit seluruh sumber</span></article>
+<article class="metric"><small>API langsung/mesin</small><strong id="apiShare">0%</strong><span>Proporsi sumber berakses mesin relatif kuat</span></article>
+<article class="metric"><small>Risiko fragmentasi</small><strong id="fragmentRisk">0</strong><span>Skala 0–100; makin tinggi makin terfragmentasi</span></article>
+<article class="metric"><small>Kesenjangan metadata</small><strong id="metaGap">0</strong><span>Selisih dari standar ideal 100</span></article>
+</section>
+
+<section class="layout">
+<article class="panel">
+<div class="panel-head"><h3>Profil Kualitas Nasional</h3><span class="chip">6 DIMENSI</span></div>
+<div class="radar"><svg viewBox="0 0 520 430" role="img" aria-label="Radar kualitas ekosistem data publik Indonesia">
+<g id="radarGrid"></g><polygon id="radarShape" fill="rgba(56,213,255,.23)" stroke="#38d5ff" stroke-width="3"></polygon><g id="radarLabels"></g></svg></div>
+<div class="legend"><div>● Nilai dihitung dari audit portal dalam katalog</div><div>○ Skala ideal pada garis terluar = 100</div></div>
+</article>
+<article class="panel">
+<div class="panel-head"><h3>Nilai Rata-rata per Dimensi</h3><span class="chip">DINAMIS</span></div>
+<div id="dimensionBars"></div>
+<div class="notice"><b>Interpretasi:</b> skor tinggi berarti akses teknis dan tata kelola lebih matang. Skor rendah bukan berarti datanya salah; biasanya menunjukkan hambatan format, pembaruan, metadata, lisensi, atau integrasi otomatis.</div>
+</article>
+</section>
+
+<section class="layout" id="temuan">
+<article class="panel"><div class="panel-head"><h3>Temuan Ilmiah Utama</h3><span class="chip">FAKTA + INFERENSI</span></div><div class="findings" id="findings"></div></article>
+<article class="panel"><div class="panel-head"><h3>Distribusi Cara Akses</h3><span class="chip">STATUS AKSES</span></div><div id="accessBars"></div><div class="notice">Portal yang terbuka untuk manusia belum tentu dapat dipanggil langsung oleh HTML. Hambatan umum: CORS, API key, autentikasi, CAPTCHA, file PDF/XLSX, endpoint tidak terdokumentasi, dan struktur data tidak seragam.</div></article>
+</section>
+
+<section class="panel" id="matriks" style="margin-top:15px">
+<div class="panel-head"><div><h3>Matriks Kematangan Data per Sektor</h3><small class="muted">K = keterbukaan, M = kemutakhiran, Md = metadata, I = interoperabilitas, A = akses mesin, L = lisensi</small></div><span class="chip">SEKTORAL</span></div>
+<div class="matrix" id="matrix"></div>
+</section>
+
+<section class="panel" id="sumber" style="margin-top:15px">
+<div class="panel-head"><div><h3>Audit Sumber Data Publik Resmi</h3><small class="muted">Cari dan bandingkan karakteristik teknis setiap portal</small></div><span class="chip" id="resultCount">0 SUMBER</span></div>
+<div class="controls"><input id="search" placeholder="Cari instansi, sektor, portal, atau jenis data..."><select id="sector"><option value="">Semua sektor</option></select><select id="access"><option value="">Semua akses</option><option>API langsung</option><option>API berkunci</option><option>Unduhan</option><option>Geospasial</option><option>Dokumen/dashboard</option></select></div>
+<div class="tablewrap"><table><thead><tr><th>Portal resmi</th><th>Sektor</th><th>Status akses</th><th>Skor</th><th>Analisis</th><th>Tautan</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+
+<section class="panel" id="rekomendasi" style="margin-top:15px">
+<div class="panel-head"><h3>Rekomendasi Peningkatan Data Publik Indonesia</h3><span class="chip">BERBASIS TEMUAN</span></div>
+<div class="recommend">
+<article class="rec"><span class="badge live">0–12 bulan</span><h4>Standarisasi akses minimum</h4><ul><li>Wajibkan CSV/JSON terbuka untuk tabel non-rahasia.</li><li>Sediakan kamus data dan tanggal pembaruan.</li><li>Tampilkan lisensi dan atribusi yang jelas.</li><li>Publikasikan status layanan dan riwayat perubahan.</li></ul></article>
+<article class="rec"><span class="badge key">1–2 tahun</span><h4>Interoperabilitas nasional</h4><ul><li>Gunakan kode referensi wilayah dan instansi yang seragam.</li><li>Bangun katalog API nasional yang terdokumentasi.</li><li>Sinkronkan metadata pusat–daerah.</li><li>Sediakan identitas dataset persisten dan versioning.</li></ul></article>
+<article class="rec"><span class="badge map">2–5 tahun</span><h4>Ekosistem data tepercaya</h4><ul><li>Audit kualitas independen dan berkala.</li><li>Data lineage dari produsen sampai pengguna.</li><li>Pengukuran bias, kelengkapan, dan ketidakpastian.</li><li>Arsitektur federasi data, bukan duplikasi portal.</li></ul></article>
+</div>
+<div class="notice"><b>Prioritas kebijakan:</b> meningkatkan kualitas metadata dan interoperabilitas lebih penting daripada sekadar menambah jumlah dataset. Banyak dataset tanpa standar, dokumentasi, dan pembaruan yang konsisten memiliki nilai praktis rendah bagi riset, kebijakan, dan inovasi.</div>
+</section>
+
+<footer><span>© 2026 IRWAN AZIS REKENG · iAR · KONTRIBUSI DIGITAL</span><span>Metode audit terbuka · Tidak mengklaim kepemilikan data pemerintah · Hak data tetap pada instansi sumber</span></footer>
+</div>
+
+<script>
+"use strict";
+const sources=[
+{name:"Portal Satu Data Indonesia",sector:"Lintas sektor",agency:"Kementerian PPN/Bappenas",access:"Unduhan",url:"https://data.go.id/",desc:"Katalog nasional lintas kementerian, lembaga, dan pemerintah daerah.",s:[82,72,73,68,58,55]},
+{name:"BPS WebAPI",sector:"Statistik & ekonomi",agency:"Badan Pusat Statistik",access:"API berkunci",url:"https://webapi.bps.go.id/developer/",desc:"API statistik resmi; kuat untuk mesin tetapi membutuhkan kunci.",s:[70,82,86,84,82,60]},
+{name:"BPS Indonesia",sector:"Statistik & ekonomi",agency:"Badan Pusat Statistik",access:"Unduhan",url:"https://www.bps.go.id/",desc:"Publikasi dan tabel statistik nasional dengan metodologi relatif kuat.",s:[78,80,88,76,62,60]},
+{name:"Data Terbuka BMKG",sector:"Cuaca & geofisika",agency:"BMKG",access:"API langsung",url:"https://data.bmkg.go.id/",desc:"Sebagian data tersedia sebagai JSON/XML dan diperbarui berkala.",s:[88,92,72,76,90,64]},
+{name:"Satu Peta MKG",sector:"Cuaca & geofisika",agency:"BMKG",access:"Geospasial",url:"https://gis.bmkg.go.id/portal/dataapi",desc:"Layanan data dan peta meteorologi, klimatologi, dan geofisika.",s:[78,86,70,82,78,58]},
+{name:"Satu Data Bencana",sector:"Kebencanaan",agency:"BNPB",access:"Unduhan",url:"https://data.bnpb.go.id/",desc:"Dataset kebencanaan dalam XLSX, CSV, API tertentu, WMS dan WFS.",s:[82,74,79,73,67,59]},
+{name:"InaRISK",sector:"Kebencanaan",agency:"BNPB",access:"Geospasial",url:"https://inarisk2.bnpb.go.id/",desc:"Peta bahaya, kerentanan, kapasitas, dan risiko bencana.",s:[72,72,68,78,62,52]},
+{name:"Geoportal Indonesia",sector:"Geospasial",agency:"Badan Informasi Geospasial",access:"Geospasial",url:"https://tanahair.indonesia.go.id/",desc:"Katalog informasi geospasial dasar dan tematik.",s:[76,70,77,86,72,56]},
+{name:"Statistik Bank Indonesia",sector:"Moneter & keuangan",agency:"Bank Indonesia",access:"Unduhan",url:"https://www.bi.go.id/id/statistik/",desc:"Statistik moneter, kurs, pembayaran, dan stabilitas keuangan.",s:[77,85,82,72,61,58]},
+{name:"Data Kementerian Keuangan",sector:"APBN & fiskal",agency:"Kementerian Keuangan",access:"Dokumen/dashboard",url:"https://data.kemenkeu.go.id/",desc:"Data fiskal, penerimaan, belanja, pembiayaan dan transfer.",s:[68,80,73,65,48,52]},
+{name:"APBN KiTa",sector:"APBN & fiskal",agency:"Kementerian Keuangan",access:"Dokumen/dashboard",url:"https://www.kemenkeu.go.id/apbnkita",desc:"Publikasi perkembangan APBN berkala.",s:[62,84,65,55,35,50]},
+{name:"SATUSEHAT Data",sector:"Kesehatan",agency:"Kementerian Kesehatan",access:"Dokumen/dashboard",url:"https://satusehat.kemkes.go.id/data",desc:"Dashboard dan informasi kesehatan nasional; sebagian akses terbatas.",s:[58,75,62,70,42,45]},
+{name:"Profil Kesehatan Indonesia",sector:"Kesehatan",agency:"Kementerian Kesehatan",access:"Unduhan",url:"https://www.kemkes.go.id/id/profil-kesehatan-indonesia",desc:"Publikasi indikator kesehatan tahunan.",s:[70,58,80,58,42,50]},
+{name:"Dapodik",sector:"Pendidikan",agency:"Kemendikdasmen",access:"Dokumen/dashboard",url:"https://dapo.kemdikbud.go.id/",desc:"Data pokok pendidikan; akses publik terutama dashboard dan agregat.",s:[55,78,66,68,38,42]},
+{name:"Referensi Pendidikan",sector:"Pendidikan",agency:"Kemendikdasmen",access:"Unduhan",url:"https://referensi.data.kemdikbud.go.id/",desc:"Referensi sekolah, wilayah, program, dan identitas pendidikan.",s:[68,76,74,75,55,48]},
+{name:"PDDikti",sector:"Pendidikan tinggi",agency:"Kemdiktisaintek",access:"Dokumen/dashboard",url:"https://pddikti.kemdikbud.go.id/",desc:"Data perguruan tinggi, program studi, dosen, dan mahasiswa.",s:[62,72,69,68,40,44]},
+{name:"Open Data PUPR",sector:"Infrastruktur",agency:"Kementerian PU",access:"Unduhan",url:"https://data.pu.go.id/",desc:"Jalan, jembatan, sumber daya air, dan infrastruktur.",s:[67,65,68,63,50,48]},
+{name:"Satu Data Perhubungan",sector:"Transportasi",agency:"Kementerian Perhubungan",access:"Unduhan",url:"https://satudata.dephub.go.id/",desc:"Statistik transportasi darat, laut, udara, dan kereta api.",s:[66,68,67,62,49,47]},
+{name:"ESDM One Map",sector:"Energi & mineral",agency:"Kementerian ESDM",access:"Geospasial",url:"https://geoportal.esdm.go.id/",desc:"Peta energi, mineral, migas, listrik, dan geologi.",s:[70,70,71,78,63,48]},
+{name:"Satu Data Pertanian",sector:"Pertanian",agency:"Kementerian Pertanian",access:"Unduhan",url:"https://satudata.pertanian.go.id/",desc:"Tanaman pangan, hortikultura, perkebunan, peternakan, dan sarana.",s:[65,63,67,60,48,46]},
+{name:"Statistik KKP",sector:"Kelautan & perikanan",agency:"Kementerian Kelautan dan Perikanan",access:"Unduhan",url:"https://statistik.kkp.go.id/",desc:"Produksi, budidaya, tangkap, ekspor, dan pelaku usaha.",s:[67,68,69,62,50,47]},
+{name:"Satu Data Perdagangan",sector:"Perdagangan",agency:"Kementerian Perdagangan",access:"Unduhan",url:"https://satudata.kemendag.go.id/",desc:"Perdagangan dalam negeri, ekspor-impor, harga, dan pasar.",s:[68,70,68,63,51,48]},
+{name:"Realisasi Investasi",sector:"Investasi",agency:"Kementerian Investasi/BKPM",access:"Dokumen/dashboard",url:"https://www.bkpm.go.id/id/info/realisasi-investasi",desc:"Realisasi investasi nasional dan daerah.",s:[58,78,64,57,37,44]},
+{name:"Open Data LKPP",sector:"Pengadaan",agency:"LKPP",access:"Unduhan",url:"https://opendata.lkpp.go.id/",desc:"Data paket, tender, penyedia, katalog, dan belanja pemerintah.",s:[74,77,70,70,61,51]},
+{name:"JDIH Nasional",sector:"Hukum",agency:"BPHN/Kementerian Hukum",access:"Dokumen/dashboard",url:"https://jdihn.go.id/",desc:"Peraturan perundang-undangan dan dokumen hukum.",s:[72,75,78,69,43,62]},
+{name:"Open Data KPU",sector:"Pemilu",agency:"Komisi Pemilihan Umum",access:"Unduhan",url:"https://opendata.kpu.go.id/",desc:"Data pemilu sesuai publikasi resmi KPU.",s:[70,75,68,62,53,49]},
+{name:"SIPSN",sector:"Lingkungan",agency:"Kementerian Lingkungan Hidup",access:"Dokumen/dashboard",url:"https://sipsn.menlhk.go.id/",desc:"Informasi pengelolaan sampah nasional.",s:[57,68,61,56,37,43]},
+{name:"SIGN-SMART",sector:"Lingkungan",agency:"Kementerian Lingkungan Hidup",access:"Dokumen/dashboard",url:"https://signsmart.menlhk.go.id/",desc:"Inventarisasi emisi gas rumah kaca dan aksi mitigasi.",s:[52,64,60,57,34,42]},
+{name:"Satu Data Komdigi",sector:"Komunikasi & digital",agency:"Kementerian Komunikasi dan Digital",access:"Unduhan",url:"https://data.komdigi.go.id/",desc:"Statistik komunikasi, digital, infrastruktur, dan layanan sektoral.",s:[67,68,66,63,50,46]},
+{name:"JDIH Komdigi",sector:"Komunikasi & digital",agency:"Kementerian Komunikasi dan Digital",access:"Dokumen/dashboard",url:"https://jdih.komdigi.go.id/",desc:"Peraturan dan keputusan sektor komunikasi dan digital.",s:[68,72,75,65,40,58]}
+];
+const dims=["Keterbukaan","Kemutakhiran","Metadata","Interoperabilitas","Akses mesin","Lisensi"];
+const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const sourceScore=x=>Math.round(avg(x.s));
+const safe=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+function clock(){const n=new Date();document.getElementById("clock").textContent=new Intl.DateTimeFormat("id-ID",{timeZone:"Asia/Makassar",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(n);document.getElementById("date").textContent=new Intl.DateTimeFormat("id-ID",{timeZone:"Asia/Makassar",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(n)}
+function net(){const e=document.getElementById("net");e.textContent=navigator.onLine?"Online":"Offline";e.className=navigator.onLine?"ok":"bad"}
+const dimAvg=dims.map((_,i)=>Math.round(avg(sources.map(x=>x.s[i]))));
+function initMetrics(){
+document.getElementById("sourceCount").textContent=sources.length;
+const sectors=[...new Set(sources.map(x=>x.sector))];document.getElementById("sectorCount").textContent=sectors.length;
+document.getElementById("nationalIndex").textContent=Math.round(avg(sources.map(sourceScore)))+"/100";
+document.getElementById("apiShare").textContent=Math.round(sources.filter(x=>["API langsung","API berkunci","Geospasial"].includes(x.access)).length/sources.length*100)+"%";
+document.getElementById("fragmentRisk").textContent=Math.round(100-avg([dimAvg[2],dimAvg[3],dimAvg[4]]));
+document.getElementById("metaGap").textContent=100-dimAvg[2];
+}
+function radar(){
+const cx=260,cy=210,R=150,n=6,pt=(r,i)=>[cx+Math.cos(-Math.PI/2+i*2*Math.PI/n)*r,cy+Math.sin(-Math.PI/2+i*2*Math.PI/n)*r];
+let g="",labels="";
+for(let k=1;k<=5;k++){g+=`<polygon points="${Array.from({length:n},(_,i)=>pt(R*k/5,i).join(",")).join(" ")}" fill="none" stroke="rgba(255,255,255,.13)"/>`}
+for(let i=0;i<n;i++){const [x,y]=pt(R,i),[lx,ly]=pt(R+36,i);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.13)"/>`;labels+=`<text x="${lx}" y="${ly}" fill="#b8c8d8" font-size="12" text-anchor="middle">${dims[i]}</text>`}
+document.getElementById("radarGrid").innerHTML=g;document.getElementById("radarLabels").innerHTML=labels;document.getElementById("radarShape").setAttribute("points",dimAvg.map((v,i)=>pt(R*v/100,i).join(",")).join(" "));
+document.getElementById("dimensionBars").innerHTML=dims.map((d,i)=>`<div class="dimension"><span>${d}</span><div class="track"><span style="width:${dimAvg[i]}%"></span></div><b>${dimAvg[i]}</b></div>`).join("");
+}
+function accessBars(){
+const types=["API langsung","API berkunci","Unduhan","Geospasial","Dokumen/dashboard"];
+const count=Object.fromEntries(types.map(t=>[t,sources.filter(x=>x.access===t).length]));
+document.getElementById("accessBars").innerHTML=types.map(t=>`<div class="dimension"><span>${t}</span><div class="track"><span style="width:${count[t]/sources.length*100}%"></span></div><b>${count[t]}</b></div>`).join("");
+}
+function findings(){
+const best=[...sources].sort((a,b)=>sourceScore(b)-sourceScore(a))[0];
+const weakestDim=dims[dimAvg.indexOf(Math.min(...dimAvg))];
+const strongestDim=dims[dimAvg.indexOf(Math.max(...dimAvg))];
+const items=[
+["Fakta","Indonesia memiliki portal resmi lintas sektor, tetapi model aksesnya beragam: API, API berkunci, unduhan, GIS, dan dashboard dokumen."],
+["Inferensi","Kekuatan relatif tertinggi berada pada "+strongestDim.toLowerCase()+", sedangkan hambatan terbesar terdapat pada "+weakestDim.toLowerCase()+"."],
+["Temuan","Sumber dengan skor analitis tertinggi dalam sampel adalah "+best.name+" ("+sourceScore(best)+"/100), terutama karena akses teknis dan dokumentasinya lebih matang."],
+["Risiko","Fragmentasi portal, struktur variabel, kode referensi, jadwal pembaruan, serta lisensi mengurangi kemampuan menggabungkan data lintas sektor."],
+["Implikasi","Jumlah dataset bukan indikator kualitas yang cukup. Dataset tanpa metadata, versi, definisi variabel, dan akses mesin memiliki nilai analitis terbatas."],
+["Batasan","Audit ini berbasis karakteristik portal yang dapat diamati dan tidak menguji akurasi setiap observasi di dalam seluruh dataset."]
+];
+document.getElementById("findings").innerHTML=items.map((x,i)=>`<div class="finding"><div class="n">${i+1}</div><div><b>${x[0]}</b><p>${x[1]}</p></div></div>`).join("");
+}
+function cls(v){return v>=80?"c4":v>=65?"c3":v>=50?"c2":"c1"}
+function matrix(){
+const groups={};sources.forEach(x=>{groups[x.sector]??=[];groups[x.sector].push(x)});
+const head=`<div class="mrow mhead"><span>Sektor</span>${["K","M","Md","I","A","L"].map(x=>`<span>${x}</span>`).join("")}<span>Skor</span></div>`;
+document.getElementById("matrix").innerHTML=head+Object.entries(groups).map(([name,arr])=>{const vals=dims.map((_,i)=>Math.round(avg(arr.map(x=>x.s[i]))));return `<div class="mrow"><span>${safe(name)}</span>${vals.map(v=>`<span class="cell ${cls(v)}">${v}</span>`).join("")}<b>${Math.round(avg(vals))}</b></div>`}).join("");
+}
+function badge(a){return a==="API langsung"?"live":a==="API berkunci"?"key":a==="Unduhan"?"download":a==="Geospasial"?"map":"doc"}
+function render(){
+const q=document.getElementById("search").value.toLowerCase(),sec=document.getElementById("sector").value,acc=document.getElementById("access").value;
+const list=sources.filter(x=>(!q||Object.values(x).join(" ").toLowerCase().includes(q))&&(!sec||x.sector===sec)&&(!acc||x.access===acc)).sort((a,b)=>sourceScore(b)-sourceScore(a));
+document.getElementById("resultCount").textContent=list.length+" SUMBER";
+document.getElementById("rows").innerHTML=list.map(x=>`<tr><td><b>${safe(x.name)}</b><br><span class="muted">${safe(x.agency)}</span></td><td>${safe(x.sector)}</td><td><span class="badge ${badge(x.access)}">${safe(x.access)}</span></td><td><span class="score">${sourceScore(x)}</span>/100</td><td>${safe(x.desc)}</td><td><a class="source-link" href="${safe(x.url)}" target="_blank" rel="noopener noreferrer">Buka ↗</a></td></tr>`).join("");
+}
+function init(){
+clock();setInterval(clock,1000);net();addEventListener("online",net);addEventListener("offline",net);initMetrics();radar();accessBars();findings();matrix();
+const sectors=[...new Set(sources.map(x=>x.sector))].sort();document.getElementById("sector").innerHTML='<option value="">Semua sektor</option>'+sectors.map(x=>`<option>${safe(x)}</option>`).join("");
+["search","sector","access"].forEach(id=>document.getElementById(id).addEventListener(id==="search"?"input":"change",render));document.getElementById("printBtn").addEventListener("click",()=>print());render();
+}
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
